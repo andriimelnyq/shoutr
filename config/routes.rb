@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   post "text_shouts" => "shouts#create", defaults: { content_type: TextShout }
   post "photo_shouts" => "shouts#create", defaults: { content_type: PhotoShout }
+  post "reshouts" => "reshouts#create"
 
   resources :shouts, only: [:show] do
     member do
