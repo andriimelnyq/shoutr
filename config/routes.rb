@@ -1,26 +1,21 @@
 Rails.application.routes.draw do
-
   constraints Clearance::Constraints::SignedIn.new do
     root to: "dashboards#show"
   end
-
   root to: "homes#show"
 
   post "text_shouts" => "shouts#create", defaults: { content_type: TextShout }
   post "photo_shouts" => "shouts#create", defaults: { content_type: PhotoShout }
-  post "reshouts" => "reshouts#create"
-
-  resources :shouts, only: [:show] do
+  resources :shouts, only: [ :show] do
     member do
       post "like" => "likes#create"
       delete "unlike" => "likes#destroy"
     end
   end
-
-  resources :hashtags, only: [:show]
-
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, only: [:create]
+
+  resources :hashtags, only: [:show]
 
   resources :users, only: [:create, :show] do
     resources :followers, only: [:index]
